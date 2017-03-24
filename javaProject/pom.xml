@@ -26,10 +26,17 @@
 		</dependency>
 		<dependency>
 			<groupId>my</groupId>
-			<artifactId>fn1</artifactId>
+			<artifactId>cfm2</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>G:/workspace/jar/cfm2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>my</groupId>
+			<artifactId>protect1</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>G:/workspace/jar/protect1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
