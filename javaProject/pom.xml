@@ -39,6 +39,13 @@
 			<systemPath>G:/workspace/jar/protect1.jar</systemPath>
 		</dependency>
 		<dependency>
+			<groupId>my</groupId>
+			<artifactId>protect2</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>G:/workspace/jar/protect2.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
