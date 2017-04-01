@@ -11,6 +11,7 @@
 	<groupId>MasterTest</groupId>
 	<artifactId>webServicesProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>webServicesProject</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -22,7 +23,7 @@
 		<commons.fileupload.version>1.3.1</commons.fileupload.version>
 		<javassist.version>3.20.0-GA</javassist.version>
 		<cxf.version>3.1.10</cxf.version>
-		<spring.version>4.2.7.RELEASE</spring.version>
+		<spring.version>4.2.6.RELEASE</spring.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<commons-io.version>2.4</commons-io.version>
 		<jboss-logging.version>3.3.0.Final</jboss-logging.version>
@@ -293,6 +294,10 @@
 				<groupId>org.jboss.as.plugins</groupId>
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>7.9.Final</version>
+				<!-- <configuration>
+					<hostname>172.27.45.39</hostname>
+					<port>8080</port>
+				</configuration> -->
 			</plugin>
 		</plugins>
 	</build>

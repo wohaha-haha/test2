@@ -6,7 +6,7 @@ import javax.jws.WebService;
 public class Demon {
 
 	@WebMethod
-	String hello(String req)
+	public String hello(String req)
 	{
 		return req+"=";
 	}
