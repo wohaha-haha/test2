@@ -10,11 +10,17 @@ public class Pt2 {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		double []mean=new double[] {19,27.5,13.7,8.2};
+		/*double []mean=new double[] {19,27.5,13.7,8.2};
 		double []sigma=new double[] {8.1,14.8,7.1,7.5};
 		double cap=107;
 		double[]fare=new double[] {105,83,57,39};
-		double[]book=new double[]{1,9,5,18};
+		double[]book=new double[]{1,9,5,18};*/
+		double []mean=new double[] {6,17.3,5.8,0.3};
+		double []sigma=new double[] {3.7,10.9,4.8,4.3};
+		double cap=107;
+		double[]fare=new double[] {105,83,57,39};
+		double[]book=new double[]{8,30,15,27};
+		
 		pt2 pt2=new pt2();
 		Object[] result=pt2.protect2(1,fare, mean,sigma,book,cap);
 		MWNumericArray temp = (MWNumericArray)result[0];
