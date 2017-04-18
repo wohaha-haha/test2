@@ -17,7 +17,9 @@
 		name="demoServie" ref="demoService" /> </bean> -->
 
 
-	<bean id="demon" class="org.ws.Demon">	</bean>
+	<bean id="demon" class="org.ws.Demon">
+	<property name="mb" ref="myMb" />
+		</bean>
 	<jaxws:endpoint id="demonWs" implementor="#demon" address="/hello">
 	<!-- <jaxws:inInterceptors>
 			<ref bean="wss4jInSec" />
