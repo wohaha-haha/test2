@@ -19,5 +19,8 @@
 
 	<bean id="demon" class="org.ws.Demon">	</bean>
 	<jaxws:endpoint id="demonWs" implementor="#demon" address="/hello">
+	<!-- <jaxws:inInterceptors>
+			<ref bean="wss4jInSec" />
+		</jaxws:inInterceptors> -->
 	</jaxws:endpoint>
 </beans>
