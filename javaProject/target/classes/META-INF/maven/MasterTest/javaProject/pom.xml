@@ -15,8 +15,52 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cxf.version>3.1.12</cxf.version>
+		
 	</properties>
 	<dependencies>
+	<!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
+		 <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>${cxf.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${cxf.version}</version>
+    </dependency>
+        <!-- Jetty is needed if you're are not using the CXFServlet -->
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http-jetty</artifactId>
+        <version>${cxf.version}</version>
+    </dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.axis/axis -->
+<dependency>
+    <groupId>org.apache.axis</groupId>
+    <artifactId>axis</artifactId>
+    <version>1.4</version>
+</dependency>
+	<!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
+<dependency>
+    <groupId>org.dom4j</groupId>
+    <artifactId>dom4j</artifactId>
+    <version>2.0.1</version>
+</dependency>
+	<!-- https://mvnrepository.com/artifact/javax.xml.rpc/javax.xml.rpc-api -->
+<dependency>
+    <groupId>javax.xml.rpc</groupId>
+    <artifactId>javax.xml.rpc-api</artifactId>
+    <version>1.1.1</version>
+</dependency>
+	<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.10</version>
+</dependency>
+	
 		<dependency>
 			<groupId>my</groupId>
 			<artifactId>javabuilder</artifactId>
