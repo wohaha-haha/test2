@@ -4,15 +4,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 import java.util.TimeZone;
 import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
 
 public class Client {
 
@@ -31,12 +28,10 @@ public class Client {
         OutputStream os = conn.getOutputStream();
         
         Date currentTime = new Date();
-//        currentTime.setHours(2);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.sss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
        // If you are parsing the date using SimpleDateFormat, you might want to set the time zone to UTC (Zulu time).
         formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         String created = formatter.format(currentTime);
-        created=created.replaceAll(" ", "T")+"Z";
         String id = String.valueOf(System.currentTimeMillis());
         String passwd="Des?Eg+7eb2d";
         String nonce=calculateNonce();

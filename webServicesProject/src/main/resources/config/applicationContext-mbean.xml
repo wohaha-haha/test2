@@ -41,12 +41,12 @@
             <value>connector:name=rmi</value>  
         </property>  
         <property name="serviceUrl">  
-            <value>service:jmx:rmi://localhost/jndi/rmi://localhost:1099/jmxrmi</value>  
+            <value>service:jmx:rmi://localhost/jndi/rmi://localhost:1098/jmxrmi</value>  
         </property>  
     </bean>  
     <bean id="registry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean">  
         <property name="port">  
-            <value>1099</value>  
+            <value>1098</value>  
         </property>  
     </bean>  
 </beans>
