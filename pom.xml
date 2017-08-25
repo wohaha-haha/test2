@@ -12,5 +12,6 @@
   <modules>
     <module>javaProject</module>
     <module>webServicesProject</module>
+    <module>dubboproject</module>
   </modules>
 </project>
