@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-4.0.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"
+        default-autowire="byName" default-lazy-init="false">
+  
+     <context:component-scan base-package="rms"/>
+        
+    <context:property-placeholder location="classpath:config/rmssim.properties"/>
+    
+<!--     <bean class="com.security.DataSecurity" lazy-init="false">
+		<property name="locations">
+            <list>
+                <value>classpath:data/hibernate.properties</value>
+                 <value>classpath:hibernate/hibernate.cfg.xml</value>
+            </list>
+        </property>
+		<property name="ignoreResourceNotFound" value="true"/>
+	</bean> -->
+	
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >
+		<property name="driverClass" value="${rmssimjdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${rmssimjdbc.url}" />
+		<property name="user" value="${rmssimjdbc.username}" />
+		<property name="password" value="${rmssimjdbc.password}" />
+		<property name="autoCommitOnClose" value="true"/>
+		<!--<property name="checkoutTimeout" value="${rmssimcpool.checkoutTimeout}"/>-->
+		<!--初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间 -->
+		<property name="initialPoolSize" value="${rmssimcpool.minPoolSize}"/>
+		 <!--连接池中保留的最小连接数。-->            
+		<property name="minPoolSize" value="${rmssimcpool.minPoolSize}"/>
+		<!--连接池中保留的最大连接数。-->            
+		<property name="maxPoolSize" value="${rmssimcpool.maxPoolSize}"/>
+		 <!--最大空闲时间,多少秒内未使用则连接被丢弃。若为0则永不丢弃  例如1800就是1800秒 -->
+		<property name="maxIdleTime" value="${rmssimcpool.maxIdleTime}"/>
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数 -->               
+		<property name="acquireIncrement" value="${rmssimcpool.acquireIncrement}"/>
+		<property name="maxIdleTimeExcessConnections" value="${rmssimcpool.maxIdleTimeExcessConnections}"/>
+		<!--定义在从数据库获取新连接失败后重复尝试的次数 -->
+		<property name="acquireRetryAttempts" value="3" />  
+		 <!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效
+  		保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试
+ 		 获取连接失败后该数据源将申明已断开并永久关闭。Default: false-->        
+	    <property name="breakAfterAcquireFailure" value="true" /> 
+	    <!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的
+ 		 时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable
+  		等方法来提升连接测试的性能。Default: false -->             
+	    <!-- <property name="testConnectionOnCheckout" value="false" /> --> 
+	    <!--每60秒检查所有连接池中的空闲连接。Default: 0 -->       
+   		<!-- <property name="idleConnectionTestPeriod" value="60" />   -->
+   		<!--maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。Default: 0 --> 
+   		<!-- <property name="maxStatementsPerConnection"></property> -->
+	</bean>
+	
+	
+	
+	
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				
+			</props>
+		</property>
+		 <property name="packagesToScan" value="rms.data.model"/>
+	</bean>
+	
+
+
+
+
+	
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		autowire="default">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="batch*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="modify*">PROPAGATION_REQUIRED</prop>
+				<prop key="upd*">PROPAGATION_REQUIRED</prop>		
+				<prop key="synch*">PROPAGATION_REQUIRED</prop>
+				<prop key="change*">PROPAGATION_REQUIRED</prop>
+				<prop key="check*">PROPAGATION_REQUIRED</prop>		
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="del*">PROPAGATION_REQUIRED</prop>
+				<prop key="flush*">PROPAGATION_REQUIRED</prop>
+				<!-- <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop> -->
+				<prop key="get*">PROPAGATION_REQUIRED</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>				
+				<prop key="*">PROPAGATION_REQUIRED</prop>				
+			</props>
+		</property>
+	</bean>	
+	
+	
+	<bean id="transactionInterceptorProxy"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+		<property name="beanNames">
+			 <list>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+   <!--  
+
+  
+    <bean id="nrise2dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >
+		<property name="driverClass" value="${nrise2jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${nrise2jdbc.url}" />
+		<property name="user" value="${nrise2jdbc.username}" />
+		<property name="password" value="${nrise2jdbc.password}" />
+		<property name="autoCommitOnClose" value="true"/>
+		<property name="checkoutTimeout" value="${nrise2cpool.checkoutTimeout}"/>
+		初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间
+		<property name="initialPoolSize" value="${nrise2cpool.minPoolSize}"/>
+		 连接池中保留的最小连接数。            
+		<property name="minPoolSize" value="${nrise2cpool.minPoolSize}"/>
+		连接池中保留的最大连接数。            
+		<property name="maxPoolSize" value="${nrise2cpool.maxPoolSize}"/>
+		 最大空闲时间,多少秒内未使用则连接被丢弃。若为0则永不丢弃  例如1800就是1800秒
+		<property name="maxIdleTime" value="${nrise2cpool.maxIdleTime}"/>
+		当连接池中的连接耗尽的时候c3p0一次同时获取的连接数               
+		<property name="acquireIncrement" value="${nrise2cpool.acquireIncrement}"/>
+		<property name="maxIdleTimeExcessConnections" value="${nrise2cpool.maxIdleTimeExcessConnections}"/>
+		定义在从数据库获取新连接失败后重复尝试的次数
+		<property name="acquireRetryAttempts" value="3" />  
+		 获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效
+  		保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试
+ 		 获取连接失败后该数据源将申明已断开并永久关闭。Default: false        
+	    <property name="breakAfterAcquireFailure" value="true" /> 
+	    因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的
+ 		 时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable
+  		等方法来提升连接测试的性能。Default: false             
+	    <property name="testConnectionOnCheckout" value="false" /> 
+	    每60秒检查所有连接池中的空闲连接。Default: 0       
+   		<property name="idleConnectionTestPeriod" value="60" />  
+   		maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。Default: 0 
+   		<property name="maxStatementsPerConnection"></property>
+	</bean>
+	
+	
+
+<bean id="nrise2sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="nrise2dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+				org.hibernate.dialect.PostgreSQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				
+			</props>
+		</property>
+		 <property name="packagesToScan" value="rms.data.model"/>
+	</bean>
+
+
+	<bean id="nrise2transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		autowire="default">
+		<property name="sessionFactory" ref="nrise2sessionFactory" />
+	</bean>
+	
+	
+	<bean id="nrise2transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="nrise2transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="batch*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="modify*">PROPAGATION_REQUIRED</prop>
+				<prop key="upd*">PROPAGATION_REQUIRED</prop>		
+				<prop key="synch*">PROPAGATION_REQUIRED</prop>
+				<prop key="change*">PROPAGATION_REQUIRED</prop>
+				<prop key="check*">PROPAGATION_REQUIRED</prop>		
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="del*">PROPAGATION_REQUIRED</prop>
+				<prop key="flush*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="get*">PROPAGATION_REQUIRED</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>				
+				<prop key="*">PROPAGATION_REQUIRED</prop>				
+			</props>
+		</property>
+	</bean>	
+    
+    	<bean id="transactionInterceptorProxyNrise2"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+		<property name="beanNames">
+			 <list>
+				<value>*ServiceNrise2</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>nrise2transactionInterceptor</value>
+			</list>
+		</property>
+	</bean> -->
+     
+    
+   <!-- 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		    <tx:attributes>
+		       <tx:method name="get*"/>
+		        <tx:method name="*"/>
+		    </tx:attributes>
+		</tx:advice>
+		
+		<aop:config>
+		    <aop:pointcut expression="execution(* com.service.*.*(..))" id="txPointCut"/>
+		    <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
+		</aop:config> -->
+</beans>

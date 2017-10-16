@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:cxf="http://cxf.apache.org/core"
+      xsi:schemaLocation="http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+  http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+  <bean id="firstJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
+        <property name="jobClass" value="org.quartz.QuartzClusterDemo"/>  
+        <property name="durability" value="true" />     
+        <property name="requestsRecovery" value="true" />  
+    </bean>  
+      
+    <bean id="firstTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="firstJobDetail" />  
+        <property name="cronExpression" value="0/5 * * ? * * *" />  
+    </bean>  
+      
+    <bean name="quartzScheduler"  
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="configLocation" value="classpath:config/quartz.properties" />  
+        <property name="jobDetails">  
+            <list>  
+                <ref bean="firstJobDetail"/>  
+            </list>  
+        </property>  
+        <property name="triggers">  
+            <list>  
+                <ref bean="firstTrigger"/>  
+            </list>  
+        </property>  
+    </bean>     
+
+
+  
+</beans>

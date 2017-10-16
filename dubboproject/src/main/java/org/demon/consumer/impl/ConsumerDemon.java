@@ -9,7 +9,7 @@ public class ConsumerDemon {
 	public static void main(String[] args) throws Exception {
 		Log4jConfigurer.initLogging("classpath:config/log4j.properties");
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-				new String[] { "classpath:config/consumer.xml" });
+				new String[] { "classpath:config/bapplicationContext-consumer.xml" });
 		context.start();
 
 		DemoService demoService = (DemoService) context.getBean("demoService"); // 获取远程服务代理
