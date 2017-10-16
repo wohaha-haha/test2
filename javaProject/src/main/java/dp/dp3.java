@@ -10,28 +10,31 @@ public class dp3 {
 		
 		for(int j=0;j<c;j++) 
 		{
-			if((f[v.length-1][j]<v[v.length-1])&&(j>w[v.length-1])) 
+			if((f[v.length-1][j]<v[v.length-1])&&(j>=w[v.length-1])) 
 			{
 				f[v.length-1][j]=v[v.length-1];
 			}
 				
 		}
-		for(int i=0;i<v.length;i++) 
+		for(int i=v.length-2;i>0;i--) 
 		{
-			for(int j=0;j<c;j++)
+			for(int j=0;j<c;j++) 
+			{
+				if(((j-w[i])>=0)&&(f[i+1][j-w[i]]+v[i])>(f[i+1][j]))
+					f[i][j]=f[i+1][j-w[i]]+v[i];
+				else
+					f[i][j]=f[i+1][j];
+			}
+		}
+		for(int i=1;i<v.length;i++) 
+		{
+			for(int j=1;j<c;j++)
 				System.out.print(f[i][j]+"    ");
 			System.out.println("");
 			
 		}
 			
-//		for(int i=v.length-2;i>=0;i--) 
-//		{
-//			for(int j=0;j<w.length;j++) 
-//			{
-//				if(f[i][j]<v[i]&&((j+w[i])<c))
-//					f[i][j]=v[i];
-//			}
-//		}
+
 	}
 
 }
